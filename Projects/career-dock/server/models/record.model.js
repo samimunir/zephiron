@@ -13,7 +13,6 @@ const recordSchema = new mongoose.Schema(
     },
     url: {
       type: String,
-      required: true,
     },
     category: {
       type: String,
@@ -25,7 +24,6 @@ const recordSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     city: {
       type: String,
@@ -35,7 +33,6 @@ const recordSchema = new mongoose.Schema(
     },
     country: {
       type: String,
-      required: true,
     },
     skills: {
       type: [String],

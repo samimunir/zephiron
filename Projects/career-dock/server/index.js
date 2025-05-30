@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./database/mongodb.js";
 import authRouter from "./routes/auth.route.js";
+import recordRouter from "./routes/record.route.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api/records", recordRouter);
 
 app.listen(PORT, () => {
   console.log(`career-dock SERVER is live on: http://localhost:${PORT}`);
