@@ -11,7 +11,8 @@ const ADMIN_CODE = process.env.ADMIN_CODE;
 
 export const register = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, adminCode } = req.body;
+    const { firstName, lastName, email, password, adminCode, country } =
+      req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -25,12 +26,17 @@ export const register = async (req, res) => {
 
     const role = adminCode === ADMIN_CODE ? "admin" : "user";
 
+    const location = {
+      country,
+    };
+
     const newUser = await User.create({
       firstName,
       lastName,
       email,
       password: hashedPassword,
       role,
+      location,
     });
 
     const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
