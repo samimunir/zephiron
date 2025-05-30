@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -21,6 +23,11 @@ const LoginPage = () => {
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!formData.email || !formData.password) {
+      alert("Failed to login. Please enter email & password.");
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -29,10 +36,14 @@ const LoginPage = () => {
       });
 
       const data = await res.json();
+      console.log(data);
       if (!res.ok) {
+        console.log("RES IS NOT OK");
         throw new Error(data.message || "Login failed.");
+      } else {
+        console.log("RES IS OK!");
       }
-
+      login(data.token, data.user);
       alert("Login successful!");
       navigate("/dashboard");
     } catch (err: any) {
@@ -42,7 +53,7 @@ const LoginPage = () => {
 
   return (
     <main className="h-[600px] border-1 border-red-500">
-      <h1 className="text-center text-4xl text-zinc-100">REGISTER PAGE</h1>
+      <h1 className="text-center text-4xl text-zinc-100">LOGIN PAGE</h1>
       <div className="flex items-center justify-center mt-32">
         <form onSubmit={handleFormSubmit}>
           <input
