@@ -83,7 +83,7 @@ const CreatePage = () => {
   return (
     <main className="flex items-center justify-center">
       <section className="">
-        <h1 className="flex items-center gap-2 text-zinc-100 text-5xl font-semibold">
+        <h1 className="flex items-center justify-center gap-2 text-zinc-100 text-5xl font-semibold">
           <span>
             Create a new{" "}
             <span className="text-amber-500 font-bold">Career-Dock </span>
