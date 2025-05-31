@@ -16,8 +16,11 @@ const Navbar = () => {
 
   return (
     <nav className="flex items-center justify-between px-8 py-4">
-      <div>
-        <h1 className="flex items-center text-5xl font-bold gap-2 text-amber-500 uppercase">
+      <div
+        onClick={() => navigate("/")}
+        className="text-amber-500 cursor-pointer"
+      >
+        <h1 className="flex items-center text-5xl font-bold gap-2 uppercase">
           <span>
             <MdApi />
           </span>

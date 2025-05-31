@@ -61,6 +61,7 @@ const CreatePage = () => {
       alert(err.message);
     }
   };
+
   return (
     <main className="h-[600px] border-1 border-red-500">
       <h1 className="text-center text-4xl text-zinc-100">CREATE PAGE</h1>

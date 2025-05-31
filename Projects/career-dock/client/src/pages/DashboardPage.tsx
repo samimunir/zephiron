@@ -58,7 +58,7 @@ const DashboardPage = () => {
         </span>
       </h2>
       <p className="text-2xl text-zinc-500">{user?.email}</p>
-      <div className="flex items-center justify-center gap-8 mt-8">
+      <div className="flex items-center gap-8 mt-8">
         {records.length === 0 && (
           <p className="text-5xl text-rose-500 font-bold text-center">
             NO RECORDS
