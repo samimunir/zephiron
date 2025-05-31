@@ -15,7 +15,7 @@ const Navbar = () => {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="flex items-center justify-between px-8 py-4">
+    <nav className="flex items-center justify-between px-8 py-4 shadow-2xl">
       <div
         onClick={() => navigate("/")}
         className="text-amber-500 cursor-pointer"
