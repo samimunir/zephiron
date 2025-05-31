@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import MainContainer from "./components/MainContainer";
 import Navbar from "./components/Navbar";
+import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Protected from "./components/Protected";
@@ -14,6 +15,7 @@ const App = () => {
     <MainContainer>
       <Navbar />
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route
