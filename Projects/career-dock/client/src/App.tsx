@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import Protected from "./components/Protected";
 import DashboardPage from "./pages/DashboardPage";
 import CreatePage from "./pages/CreatePage";
+import EditPage from "./pages/EditPage";
 
 const App = () => {
   return (
@@ -24,10 +25,18 @@ const App = () => {
           }
         />
         <Route
-          path="/create"
+          path="/record/create"
           element={
             <Protected>
               <CreatePage />
+            </Protected>
+          }
+        />
+        <Route
+          path="/record/edit/:id"
+          element={
+            <Protected>
+              <EditPage />
             </Protected>
           }
         />

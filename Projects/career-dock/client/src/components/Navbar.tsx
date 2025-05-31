@@ -27,7 +27,7 @@ const Navbar = () => {
               Dashboard
             </p>
             <p
-              onClick={() => navigate("/create")}
+              onClick={() => navigate("/record/create")}
               className="text-sky-500 font-semibold"
             >
               Create
