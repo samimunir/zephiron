@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 import {
   createContext,
   useContext,
@@ -57,6 +59,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    toast.success("Logged out", {
+      autoClose: 3000,
+      theme: "dark",
+    });
   };
 
   return (

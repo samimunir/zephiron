@@ -9,11 +9,13 @@ import Protected from "./components/Protected";
 import DashboardPage from "./pages/DashboardPage";
 import CreatePage from "./pages/CreatePage";
 import EditPage from "./pages/EditPage";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
     <MainContainer>
       <Navbar />
+      <ToastContainer position="top-right" />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />

@@ -16,7 +16,7 @@ const Hero = () => {
 
   const navigate = useNavigate();
   return (
-    <section className="border-1 border-white h-full flex items-center justify-center">
+    <section className="h-full flex items-center justify-center">
       <div>
         <div>
           <h1 className="flex items-center gap-2 text-5xl font-bold text-zinc-100 tracking-wide my-4">

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { MdEmail, MdLogin, MdPassword } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -24,7 +26,10 @@ const LoginPage = () => {
     event.preventDefault();
 
     if (!formData.email || !formData.password) {
-      alert("Failed to login. Please enter email & password.");
+      toast.error("Failed to login. Please enter email & password.", {
+        autoClose: 3000,
+        theme: "dark",
+      });
       return;
     }
 
@@ -36,50 +41,80 @@ const LoginPage = () => {
       });
 
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (!res.ok) {
-        console.log("RES IS NOT OK");
+        // console.log("RES IS NOT OK");
         throw new Error(data.message || "Login failed.");
       } else {
-        console.log("RES IS OK!");
+        // console.log("RES IS OK!");
       }
       login(data.token, data.user);
-      alert("Login successful!");
+      toast.success("Login successful!", {
+        autoClose: 3000,
+        theme: "dark",
+      });
       navigate("/dashboard");
     } catch (err: any) {
-      alert(err.message);
+      toast.error(err.message, {
+        autoClose: 3000,
+        theme: "dark",
+      });
     }
   };
 
   return (
-    <main className="h-[600px] border-1 border-red-500">
-      <h1 className="text-center text-4xl text-zinc-100">LOGIN PAGE</h1>
-      <div className="flex items-center justify-center mt-32">
-        <form onSubmit={handleFormSubmit}>
-          <input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            placeholder="email"
-            className="block border-1 border-zinc-100 text-zinc-100 placeholder:text-zinc-100"
-          />
-          <input
-            type="text"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            placeholder="password"
-            className="block border-1 border-zinc-100 text-zinc-100 placeholder:text-zinc-100"
-          />
-          <button
-            type="submit"
-            className="px-2 py-1 border-1 border-red-500 text-zinc-100 bg-red-500"
+    <main className="h-[600px] flex items-center justify-center">
+      <section className="">
+        <h1 className="flex items-center gap-2 text-zinc-100 text-5xl font-semibold">
+          <span>
+            Login to your{" "}
+            <span className="text-amber-500 font-bold">Career-Dock </span>
+            account
+          </span>
+          <MdLogin className="text-amber-500 font-bold" />
+        </h1>
+        <div className="flex items-center justify-center">
+          <form
+            onSubmit={handleFormSubmit}
+            className="border-2 border-amber-500 p-16 my-16 rounded-md shadow-2xl"
           >
-            Login
-          </button>
-        </form>
-      </div>
+            <div className="text-2xl flex items-center gap-4 border-b-2 border-amber-500 py-4 shadow-2xl">
+              <label>
+                <MdEmail className="text-5xl text-amber-500" />
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+                className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
+              />
+            </div>
+            <div className="text-2xl flex items-center gap-4 my-4 border-b-2 border-amber-500 py-4 shadow-2xl">
+              <label>
+                <MdPassword className="text-5xl text-amber-500" />
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                placeholder="Password"
+                className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
+              />
+            </div>
+            <div className="flex items-center justify-center mt-8">
+              <button
+                type="submit"
+                className="border-2 border-amber-500 rounded-md p-2 w-[250px] text-xl flex items-center justify-center gap-2 text-amber-500 font-semibold hover:bg-amber-500 hover:text-zinc-900 hover:scale-110 transition-all shadow-2xl"
+              >
+                Login <MdLogin />
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
   );
 };
