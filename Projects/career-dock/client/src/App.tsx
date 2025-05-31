@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import MainContainer from "./components/MainContainer";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -45,6 +46,7 @@ const App = () => {
           }
         />
       </Routes>
+      <Footer />
     </MainContainer>
   );
 };
