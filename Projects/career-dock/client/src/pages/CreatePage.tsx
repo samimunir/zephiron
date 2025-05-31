@@ -2,6 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+import {
+  MdAssignment,
+  MdCategory,
+  MdHub,
+  MdLogin,
+  MdTitle,
+} from "react-icons/md";
+import { toast } from "react-toastify";
+
 const CreatePage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -31,7 +40,10 @@ const CreatePage = () => {
       !formData.company ||
       !formData.type
     ) {
-      alert("Please provide all required fields.");
+      toast.error("Please provide all required fields.", {
+        autoClose: 3000,
+        theme: "dark",
+      });
       return;
     }
 
@@ -55,58 +67,102 @@ const CreatePage = () => {
         throw new Error(data.message || "Failed to create record.");
       }
 
-      alert("Record created successfully.");
+      toast.success("Record created successfully.", {
+        autoClose: 3000,
+        theme: "dark",
+      });
       navigate("/dashboard");
     } catch (err: any) {
-      alert(err.message);
+      toast.error(err.message, {
+        autoClose: 3000,
+        theme: "dark",
+      });
     }
   };
 
   return (
-    <main className="h-[600px] border-1 border-red-500">
-      <h1 className="text-center text-4xl text-zinc-100">CREATE PAGE</h1>
-      <div className="flex items-center justify-center mt-32">
-        <form onSubmit={handleFormSubmit}>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            placeholder="title"
-            className="block border-1 border-zinc-100 text-zinc-100 placeholder:text-zinc-100"
-          />
-          <input
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleInputChange}
-            placeholder="category"
-            className="block border-1 border-zinc-100 text-zinc-100 placeholder:text-zinc-100"
-          />
-          <input
-            type="text"
-            name="company"
-            value={formData.company}
-            onChange={handleInputChange}
-            placeholder="company"
-            className="block border-1 border-zinc-100 text-zinc-100 placeholder:text-zinc-100"
-          />
-          <input
-            type="text"
-            name="type"
-            value={formData.type}
-            onChange={handleInputChange}
-            placeholder="type"
-            className="block border-1 border-zinc-100 text-zinc-100 placeholder:text-zinc-100"
-          />
-          <button
-            type="submit"
-            className="px-2 py-1 border-1 border-red-500 text-zinc-100 bg-red-500"
+    <main className="flex items-center justify-center">
+      <section className="">
+        <h1 className="flex items-center gap-2 text-zinc-100 text-5xl font-semibold">
+          <span>
+            Create a new{" "}
+            <span className="text-amber-500 font-bold">Career-Dock </span>
+            Record
+          </span>
+          <MdLogin className="text-amber-500 font-bold" />
+        </h1>
+        <div className="flex items-center justify-center">
+          <form
+            onSubmit={handleFormSubmit}
+            className="border-2 border-amber-500 p-16 my-16 rounded-md shadow-2xl w-[1000px]"
           >
-            Register
-          </button>
-        </form>
-      </div>
+            <div className="flex items-center justify-between">
+              <div className="text-2xl flex items-center gap-4 border-b-2 border-amber-500 py-4 shadow-2xl">
+                <label>
+                  <MdTitle className="text-5xl text-amber-500" />
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                  placeholder="Title"
+                  className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
+                />
+              </div>
+              <div className="text-2xl flex items-center gap-4 my-4 border-b-2 border-amber-500 py-4 shadow-2xl">
+                <label>
+                  <MdCategory className="text-5xl text-amber-500" />
+                </label>
+                <input
+                  type="text"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  placeholder="Category"
+                  className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="text-2xl flex items-center gap-4 border-b-2 border-amber-500 py-4 shadow-2xl">
+                <label>
+                  <MdHub className="text-5xl text-amber-500" />
+                </label>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  placeholder="Company"
+                  className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
+                />
+              </div>
+              <div className="text-2xl flex items-center gap-4 my-4 border-b-2 border-amber-500 py-4 shadow-2xl">
+                <label>
+                  <MdAssignment className="text-5xl text-amber-500" />
+                </label>
+                <input
+                  type="text"
+                  name="type"
+                  value={formData.type}
+                  onChange={handleInputChange}
+                  placeholder="on-site | hybrid | remote"
+                  className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-center mt-8">
+              <button
+                type="submit"
+                className="border-2 border-amber-500 rounded-md p-2 w-full text-xl flex items-center justify-center gap-2 text-amber-500 font-semibold hover:bg-amber-500 hover:text-zinc-900 hover:scale-110 transition-all shadow-2xl"
+              >
+                Create Record <MdLogin />
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
   );
 };
