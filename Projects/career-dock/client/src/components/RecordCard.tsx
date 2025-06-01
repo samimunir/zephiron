@@ -26,7 +26,13 @@ const RecordCard = (props: RecordCardProps) => {
   const updatedTime = props.updatedAt.substring(11, 16);
 
   return (
-    <div className="border-1 border-amber-500 w-[600px] shadow-2xl rounded-md p-4 cursor-default hover:scale-105 transition-all">
+    <div
+      className={`border-2 border-amber-500 w-[600px] shadow-2xl rounded-md p-4 cursor-default hover:scale-105 ${
+        props.status === "rejected" || props.status === "closed"
+          ? "blur-xs border-rose-500 hover:blur-none"
+          : "border-amber-500"
+      } ${props.status === "accepted" && "border-emerald-500"} transition-all`}
+    >
       <div className="flex items-center justify-between p-2">
         <h1 className="text-2xl text-amber-500 font-bold truncate">
           {props.title}

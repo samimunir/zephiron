@@ -145,12 +145,12 @@ const DashboardPage = () => {
           </p>
         </div>
         <div>
-          <p className="text-2xl text-amber-500">Email: {user?.email}</p>
+          <p className="text-2xl text-amber-500 uppercase">{user?.email}</p>
         </div>
         {user?.location.country && (
           <div>
-            <p className="text-2xl text-amber-500">
-              Country: {user?.location.country}
+            <p className="text-2xl text-emerald-500 uppercase">
+              {user?.location.country}
             </p>
           </div>
         )}
@@ -260,7 +260,7 @@ const DashboardPage = () => {
                 {statusDistribution.map((entry, index) => (
                   <Cell
                     key={`bar-${index}`}
-                    stroke={getStatusColor(entry.name, index)}
+                    fill={getStatusColor(entry.name, index)}
                   />
                 ))}
               </Bar>

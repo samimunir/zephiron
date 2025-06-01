@@ -92,7 +92,7 @@ const RegisterPage = () => {
         <div className="flex items-center justify-center">
           <form
             onSubmit={handleFormSubmit}
-            className="border-2 border-amber-500 p-16 my-16 rounded-md shadow-2xl w-[1000px]"
+            className="border-2 border-amber-500 p-16 my-8 rounded-md shadow-2xl w-[1000px]"
           >
             <div className="flex items-center justify-between">
               <div className="text-2xl flex items-center gap-4 border-b-2 border-amber-500 py-4 shadow-2xl">
