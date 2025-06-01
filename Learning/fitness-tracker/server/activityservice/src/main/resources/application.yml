@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: activityservice
+  data:
+    mongodb:
+      uri: mongodb+srv://samidmunir:QcOoejfyhScXyuPV@fitness-tracker-activit.barwpke.mongodb.net/?retryWrites=true&w=majority&appName=fitness-tracker-activity
+      database: fitness-tracker-activity
+server:
+  port: 8082
