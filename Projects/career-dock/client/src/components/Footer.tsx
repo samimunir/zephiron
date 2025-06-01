@@ -2,7 +2,7 @@ import { MdApi } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="w-full absolute bottom-0 bg-zinc-900 shadow-2xl px-48 py-8 flex items-center justify-between border-t-2 border-amber-500 cursor-default">
+    <footer className="w-full bg-zinc-900 shadow-2xl px-48 py-8 flex items-center justify-between border-t-2 border-amber-500 cursor-default">
       <div>
         <h1 className="text-2xl flex items-center gap-2 text-amber-500">
           Career Dock <MdApi />

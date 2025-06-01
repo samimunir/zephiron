@@ -8,17 +8,19 @@ import {
   useEffect,
 } from "react";
 
+type Location = {
+  city: string;
+  state: string;
+  country: string;
+};
+
 type User = {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
   role: "admin" | "user";
-  location: {
-    city: string;
-    state: string;
-    country: string;
-  };
+  location: Location;
 };
 
 interface AuthContextType {

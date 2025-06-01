@@ -1,23 +1,77 @@
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import RecordCard from "../components/RecordCard";
+import { toast } from "react-toastify";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  LineChart,
+  Line,
+  Legend,
+} from "recharts";
+
+const COLORS = ["#0099ff", "#00ff99", "#ffcc00", "#ff0066", "#9966ff"];
 
 type Record = {
   _id: string;
   title: string;
   category: string;
   company: string;
+  city: string;
+  country: string;
   type: string;
+  salary: number;
+  description: string;
+  url: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 const DashboardPage = () => {
   const { user } = useAuth();
 
-  const navigate = useNavigate();
-
   const userId = user?.id;
 
   const [records, setRecords] = useState<Record[]>([]);
+
+  const total = records.length;
+  const totalSalary = records.reduce((sum, r) => sum + r.salary, 0);
+  const avgSalary = (totalSalary / total).toFixed(2);
+  const highestSalary = Math.max(...records.map((r) => r.salary));
+  const lowestSalary = Math.min(...records.map((r) => r.salary));
+
+  const applicationsOverTime = Object.entries(
+    records.reduce((acc, cur) => {
+      const day = new Date(cur.createdAt).toLocaleDateString();
+      acc[day] = (acc[day] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number })
+  )
+    .map(([date, count]) => ({ date, count }))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  const recordsByType = Object.entries(
+    records.reduce((acc, cur) => {
+      acc[cur.type] = (acc[cur.type] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number })
+  ).map(([name, value]) => ({ name, value }));
+
+  const recordsByCategory = Object.entries(
+    records.reduce((acc, cur) => {
+      acc[cur.category] = (acc[cur.category] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number })
+  ).map(([name, value]) => ({ name, value }));
 
   const fetchRecords = async () => {
     const res = await fetch("http://localhost:3000/api/records/user-records", {
@@ -37,9 +91,15 @@ const DashboardPage = () => {
     });
 
     if (!res.ok) {
-      alert("Failed to delete record.");
+      toast.error("Failed to delete record.", {
+        autoClose: 3000,
+        theme: "dark",
+      });
     } else {
-      alert("Successfully deleted record.");
+      toast.success("Successfully deleted record.", {
+        autoClose: 3000,
+        theme: "dark",
+      });
     }
     fetchRecords();
   };
@@ -49,45 +109,123 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <main className="h-[600px] border-1 border-red-500">
-      <h1 className="text-center text-4xl text-zinc-300">DASHBOARD PAGE</h1>
-      <h2 className="text-3xl">
-        <span className="text-zinc-100 font-semibold">Welcome, </span>
-        <span className="text-sky-500 font-bold">
-          {user?.firstName}, {user?.lastName[0]}.
-        </span>
-      </h2>
-      <p className="text-2xl text-zinc-500">{user?.email}</p>
-      <div className="flex items-center gap-8 mt-8">
+    <main className="p-8 w-full">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-4xl text-zinc-300">
+            Welcome to your Dashboard{" "}
+            <span className="text-sky-500 font-bold">
+              {user?.firstName}, {user?.lastName[0]}.
+            </span>
+          </p>
+        </div>
+        <div>
+          <p className="text-2xl text-amber-500">Email: {user?.email}</p>
+        </div>
+        {user?.location.country && (
+          <div>
+            <p className="text-2xl text-amber-500">
+              Country: {user?.location.country}
+            </p>
+          </div>
+        )}
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+        <div className="bg-zinc-800 text-white p-4 rounded-md shadow">
+          <h3 className="text-sm text-zinc-400">Total Records</h3>
+          <p className="text-2xl font-bold">{total}</p>
+        </div>
+        <div className="bg-zinc-800 text-white p-4 rounded-md shadow">
+          <h3 className="text-sm text-zinc-400">Total Salary</h3>
+          <p className="text-2xl font-bold">${totalSalary.toLocaleString()}</p>
+        </div>
+        <div className="bg-zinc-800 text-white p-4 rounded-md shadow">
+          <h3 className="text-sm text-zinc-400">Avg Salary</h3>
+          <p className="text-2xl font-bold">${avgSalary}</p>
+        </div>
+        <div className="bg-zinc-800 text-white p-4 rounded-md shadow">
+          <h3 className="text-sm text-zinc-400">Salary Range</h3>
+          <p className="text-lg font-bold">
+            ${lowestSalary} - ${highestSalary}
+          </p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 my-8 border-b-2 border-amber-500">
+        {/* Pie */}
+        <div className="bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-white mb-2">Job Type Breakdown</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={recordsByType}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={100}
+                label
+              >
+                {recordsByType.map((_, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Bar */}
+        <div className="bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-white mb-2">Records per Category</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={recordsByCategory}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" fill="#00ff99" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Line */}
+        <div className="col-span-1 lg:col-span-2 bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-white mb-2">Applications Over Time</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={applicationsOverTime}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="count" stroke="#0099ff" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+      <div className="flex items-center gap-8 mt-8 mx-auto overflow-y-auto overflow-x-hidden py-4 flex-wrap">
         {records.length === 0 && (
           <p className="text-5xl text-rose-500 font-bold text-center">
             NO RECORDS
           </p>
         )}
         {records.map((record: Record) => (
-          <div
+          <RecordCard
+            id={record._id}
             key={record._id}
-            className="bg-zinc-800 border-1 border-zinc-100 p-4 rounded-md w-[200px] hover:shadow-2xl transition-all"
-          >
-            <h1 className="text-sky-500 font-semibold">{record.title}</h1>
-            <h2 className="">{record.category}</h2>
-            <h3 className="text-zinc-100 font-bold">{record.company}</h3>
-            <h4 className="text-zinc-300">{record.type}</h4>
-            <div>
-              <button
-                onClick={() => navigate(`/record/edit/${record._id}`)}
-                className="px-2 py-1 bg-amber-500 border-1 border-amber-500 text-zinc-900 font-semibold hover:bg-zinc-900 hover:text-amber-500 transition-all cursor-default"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(record._id)}
-                className="px-2 py-1 bg-rose-500 border-1 border-rose-500 text-zinc-100 font-semibold hover:bg-zinc-100 hover:text-rose-500 transition-all cursor-default"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
+            title={record.title}
+            category={record.category}
+            company={record.company}
+            city={record.city}
+            country={record.country}
+            type={record.type}
+            salary={record.salary}
+            description={record.description}
+            url={record.url}
+            status={record.status}
+            createdAt={record.createdAt}
+            updatedAt={record.updatedAt}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
     </main>

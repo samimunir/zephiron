@@ -29,6 +29,7 @@ const EditPage = () => {
     state: "",
     country: "",
     description: "",
+    salary: 0.0,
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +69,7 @@ const EditPage = () => {
       state: formData.state,
       country: formData.country,
       description: formData.description,
+      salary: formData.salary,
     };
 
     try {
@@ -114,6 +116,7 @@ const EditPage = () => {
       state: record.state,
       country: record.country,
       description: record.description,
+      salary: record.salary,
     });
   };
 
@@ -271,6 +274,21 @@ const EditPage = () => {
                   value={formData.description}
                   onChange={handleInputChange}
                   placeholder="Description"
+                  className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="text-2xl flex items-center gap-4 my-4 border-b-2 border-amber-500 py-4 shadow-2xl">
+                <label>
+                  <MdAssignment className="text-5xl text-amber-500" />
+                </label>
+                <input
+                  type="number"
+                  name="salary"
+                  value={formData.salary}
+                  onChange={handleInputChange}
+                  placeholder="$/YEAR"
                   className="outline-none text-amber-500 placeholder:text-amber-500 px-2 py-1"
                 />
               </div>

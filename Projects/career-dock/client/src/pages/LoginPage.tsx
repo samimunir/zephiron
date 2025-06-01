@@ -45,8 +45,6 @@ const LoginPage = () => {
       if (!res.ok) {
         // console.log("RES IS NOT OK");
         throw new Error(data.message || "Login failed.");
-      } else {
-        // console.log("RES IS OK!");
       }
       login(data.token, data.user);
       toast.success("Login successful!", {
@@ -63,7 +61,7 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="flex items-center justify-center">
+    <main className="h-[100vh] flex items-center justify-center">
       <section className="">
         <h1 className="flex items-center gap-2 text-zinc-100 text-5xl font-semibold">
           <span>

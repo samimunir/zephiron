@@ -79,7 +79,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <main className="flex items-center justify-center">
+    <main className="h-[100vh] flex items-center justify-center">
       <section className="">
         <h1 className="flex items-center gap-2 text-zinc-100 text-5xl font-semibold">
           <span>
