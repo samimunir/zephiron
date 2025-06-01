@@ -28,9 +28,13 @@ const RecordCard = (props: RecordCardProps) => {
   return (
     <div className="border-1 border-amber-500 w-[600px] shadow-2xl rounded-md p-4 cursor-default hover:scale-105 transition-all">
       <div className="flex items-center justify-between p-2">
-        <h1 className="text-2xl text-amber-500 font-bold">{props.title}</h1>
-        <h2 className="text-xl text-zinc-300 uppercase">{props.category}</h2>
-        <h3 className="text-2xl text-zinc-100 font-semibold">
+        <h1 className="text-2xl text-amber-500 font-bold truncate">
+          {props.title}
+        </h1>
+        <h2 className="text-md text-zinc-300 uppercase truncate">
+          {props.category}
+        </h2>
+        <h3 className="text-2xl text-zinc-100 font-semibold truncate">
           {props.company}
         </h3>
       </div>
@@ -40,7 +44,13 @@ const RecordCard = (props: RecordCardProps) => {
         </h1>
         <h2 className="text-2xl text-amber-500 uppercase">{props.type}</h2>
         <h3 className="text-2xl text-sky-500 uppercase">
-          ${props.salary}/year
+          $
+          {props.salary
+            ? props.salary
+                .toString()
+                .substring(0, props.salary.toString().length - 3)
+            : 0}
+          K/yr
         </h3>
       </div>
       <div className="p-2">
@@ -80,7 +90,17 @@ const RecordCard = (props: RecordCardProps) => {
           <span className="font-bold">Created At:</span>{" "}
           {createdDate === updatedDate ? createdTime : createdDate}
         </p>
-        <p className="text-xl text-amber-500 uppercase">{props.status}</p>
+        <p
+          className={`text-xl uppercase ${
+            props.status === "closed" || props.status === "rejected"
+              ? "text-rose-500"
+              : "text-amber-500"
+          } ${
+            props.status === "accepted" ? "text-emerald-500" : "text-amber-500"
+          }`}
+        >
+          {props.status}
+        </p>
         <p className="text-lg text-zinc-500">
           <span className="font-bold">Updated At:</span>{" "}
           {updatedDate === createdDate ? updatedTime : updatedDate}

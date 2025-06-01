@@ -20,6 +20,13 @@ import {
 
 const COLORS = ["#0099ff", "#00ff99", "#ffcc00", "#ff0066", "#9966ff"];
 
+const STATUS_COLORS: { [key: string]: string } = {
+  accepted: "#4ade80", // green
+  rejected: "#f87171", // red
+  pending: "#facc15", // yellow
+  closed: "#a78bfa", // purple
+};
+
 type Record = {
   _id: string;
   title: string;
@@ -73,6 +80,13 @@ const DashboardPage = () => {
     }, {} as { [key: string]: number })
   ).map(([name, value]) => ({ name, value }));
 
+  const countryDistribution = Object.entries(
+    records.reduce((acc, record) => {
+      acc[record.country] = (acc[record.country] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number })
+  ).map(([name, value]) => ({ name, value }));
+
   const fetchRecords = async () => {
     const res = await fetch("http://localhost:3000/api/records/user-records", {
       method: "POST",
@@ -104,6 +118,17 @@ const DashboardPage = () => {
     fetchRecords();
   };
 
+  const statusDistribution = Object.entries(
+    records.reduce((acc, record) => {
+      acc[record.status] = (acc[record.status] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number })
+  ).map(([name, value]) => ({ name, value }));
+
+  const getStatusColor = (status: string, index: number): string => {
+    return STATUS_COLORS[status] ?? COLORS[index % COLORS.length];
+  };
+
   useEffect(() => {
     fetchRecords();
   }, []);
@@ -130,7 +155,7 @@ const DashboardPage = () => {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 my-8">
         <div className="bg-zinc-800 text-white p-4 rounded-md shadow">
           <h3 className="text-sm text-zinc-400">Total Records</h3>
           <p className="text-2xl font-bold">{total}</p>
@@ -150,10 +175,10 @@ const DashboardPage = () => {
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 my-8 border-b-2 border-amber-500">
+      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-8 my-8 border-b-2 border-amber-500">
         {/* Pie */}
         <div className="bg-zinc-900 p-4 rounded shadow">
-          <h2 className="text-white mb-2">Job Type Breakdown</h2>
+          <h2 className="text-2xl text-white mb-2">Job Type Breakdown</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -174,7 +199,7 @@ const DashboardPage = () => {
 
         {/* Bar */}
         <div className="bg-zinc-900 p-4 rounded shadow">
-          <h2 className="text-white mb-2">Records per Category</h2>
+          <h2 className="text-2xl text-white mb-2">Records per Category</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={recordsByCategory}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -189,7 +214,7 @@ const DashboardPage = () => {
 
         {/* Line */}
         <div className="col-span-1 lg:col-span-2 bg-zinc-900 p-4 rounded shadow">
-          <h2 className="text-white mb-2">Applications Over Time</h2>
+          <h2 className="text-2xl text-white mb-2">Applications Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={applicationsOverTime}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -199,6 +224,47 @@ const DashboardPage = () => {
               <Legend />
               <Line type="monotone" dataKey="count" stroke="#0099ff" />
             </LineChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="col-span-1 lg:col-span-2 bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-2xl text-white mb-2">Applications per Country</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={countryDistribution}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={100}
+                label
+              >
+                {countryDistribution.map((_, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="col-span-1 lg:col-span-2 bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-2xl text-white mb-2">
+            Application Status Breakdown
+          </h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={statusDistribution}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" fill="#60a5fa">
+                {statusDistribution.map((entry, index) => (
+                  <Cell
+                    key={`bar-${index}`}
+                    stroke={getStatusColor(entry.name, index)}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
