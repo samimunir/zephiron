@@ -24,10 +24,13 @@ const RecordCard = (props: RecordCardProps) => {
   const createdTime = props.createdAt.substring(11, 16);
   const updatedDate = props.updatedAt.substring(0, 10);
   const updatedTime = props.updatedAt.substring(11, 16);
+  const todayDate = new Date().toISOString().substring(0, 10);
+  const displayCreatedDate = todayDate !== createdDate;
+  // const displayUpdatedDate = todayDate === updatedDate;
 
   return (
     <div
-      className={`border-2 border-amber-500 w-[600px] shadow-2xl rounded-md p-4 cursor-default hover:scale-105 ${
+      className={`border-2 border-amber-500 w-[700px] shadow-2xl rounded-md p-4 cursor-default hover:scale-105 ${
         props.status === "rejected" || props.status === "closed"
           ? "blur-xs border-rose-500 hover:blur-none"
           : "border-amber-500"
@@ -60,9 +63,9 @@ const RecordCard = (props: RecordCardProps) => {
         </h3>
       </div>
       <div className="p-2">
-        <p className="text-lg text-zinc-100">{props.description}</p>
+        <p className="text-lg text-zinc-100 truncate">{props.description}</p>
       </div>
-      <div className="p-2">
+      <div className="p-2 truncate">
         <a
           href={props.url}
           target="_blank"
@@ -94,7 +97,9 @@ const RecordCard = (props: RecordCardProps) => {
       <div className="flex items-center justify-between p-2">
         <p className="text-lg text-zinc-500">
           <span className="font-bold">Created At:</span>{" "}
-          {createdDate === updatedDate ? createdTime : createdDate}
+          {createdDate === updatedDate && !displayCreatedDate
+            ? createdTime
+            : createdDate}
         </p>
         <p
           className={`text-xl uppercase ${

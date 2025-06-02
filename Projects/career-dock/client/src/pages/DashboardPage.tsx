@@ -129,6 +129,13 @@ const DashboardPage = () => {
     return STATUS_COLORS[status] ?? COLORS[index % COLORS.length];
   };
 
+  const companyDistribution = Object.entries(
+    records.reduce((acc, record) => {
+      acc[record.company] = (acc[record.company] || 0) + 1;
+      return acc;
+    }, {} as { [key: string]: number })
+  ).map(([name, value]) => ({ name, value }));
+
   useEffect(() => {
     fetchRecords();
   }, []);
@@ -176,8 +183,7 @@ const DashboardPage = () => {
         </div>
       </div>
       <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-8 my-8 border-b-2 border-amber-500">
-        {/* Pie */}
-        <div className="bg-zinc-900 p-4 rounded shadow">
+        <div className="col-span-1 bg-zinc-900 p-4 rounded shadow">
           <h2 className="text-2xl text-white mb-2">Job Type Breakdown</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -196,9 +202,7 @@ const DashboardPage = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
-
-        {/* Bar */}
-        <div className="bg-zinc-900 p-4 rounded shadow">
+        <div className="col-span-2 bg-zinc-900 p-4 rounded shadow">
           <h2 className="text-2xl text-white mb-2">Records per Category</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={recordsByCategory}>
@@ -211,41 +215,7 @@ const DashboardPage = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-
-        {/* Line */}
-        <div className="col-span-1 lg:col-span-2 bg-zinc-900 p-4 rounded shadow">
-          <h2 className="text-2xl text-white mb-2">Applications Over Time</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={applicationsOverTime}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="count" stroke="#0099ff" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="col-span-1 lg:col-span-2 bg-zinc-900 p-4 rounded shadow">
-          <h2 className="text-2xl text-white mb-2">Applications per Country</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={countryDistribution}
-                dataKey="value"
-                nameKey="name"
-                outerRadius={100}
-                label
-              >
-                {countryDistribution.map((_, index) => (
-                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="col-span-1 lg:col-span-2 bg-zinc-900 p-4 rounded shadow">
+        <div className="col-span-2 bg-zinc-900 p-4 rounded shadow">
           <h2 className="text-2xl text-white mb-2">
             Application Status Breakdown
           </h2>
@@ -265,6 +235,60 @@ const DashboardPage = () => {
                 ))}
               </Bar>
             </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="col-span-1 bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-2xl text-white mb-2">Records per Company</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={companyDistribution}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={100}
+                label
+              >
+                {companyDistribution.map((_, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="col-span-2 bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-2xl text-white mb-2">Applciations per Country</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={countryDistribution}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={100}
+                label
+              >
+                {countryDistribution.map((_, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-8 my-8 border-b-2 border-amber-500">
+        {/* Line */}
+        <div className="col-span-full lg:col-span-full bg-zinc-900 p-4 rounded shadow">
+          <h2 className="text-2xl text-white mb-2">Applications Over Time</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={applicationsOverTime}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="count" stroke="#0099ff" />
+            </LineChart>
           </ResponsiveContainer>
         </div>
       </div>

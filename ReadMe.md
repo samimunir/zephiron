@@ -29,4 +29,9 @@ Sami Munir | samidmunir@outlook.com | Rutgers University B.S. Computer Science |
 - React
 - Node
 
+### pc-monitor-tool
+
+- Python
+- pip
+
 ## Client
