@@ -123,16 +123,19 @@
 // export default Navbar;
 
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Moon, Sun, Menu, X, Home, ShoppingCart, Wrench } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import logo from "../assets/logo.jpg";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { isAuthenticated, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isDark = theme === "dark";
 
@@ -205,6 +208,21 @@ const Navbar = () => {
               <Moon className="w-4 h-4 text-gray-800" />
             )}
           </button>
+          {isAuthenticated ? (
+            <button
+              onClick={() => logout}
+              className="border-2 border-rose-500 px-2 py-1 rounded-md hover:bg-rose-500 transition-all"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate("/login")}
+              className="border-2 border-rose-500 px-2 py-1 rounded-md hover:bg-rose-500 transition-all"
+            >
+              Login
+            </button>
+          )}
 
           {/* Hamburger */}
           <button
