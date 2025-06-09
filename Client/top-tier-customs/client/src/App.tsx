@@ -6,6 +6,7 @@ import ServicesPage from "./pages/ServicesPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import BookingModal from "./components/BookingModal";
+import CartDrawer from "./components/CartDrawer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
       <BookingModal />
+      <CartDrawer />
     </Layout>
   );
 }
