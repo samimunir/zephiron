@@ -5,6 +5,7 @@ import ProductsPage from "./pages/ProductsPage";
 import ServicesPage from "./pages/ServicesPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import BookingModal from "./components/BookingModal";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
+      <BookingModal />
     </Layout>
   );
 }

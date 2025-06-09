@@ -5,15 +5,18 @@ import "./index.css";
 import { ThemeProvider } from "./context/ThemeContext";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { BookingProvider } from "./context/BookingContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
-      <BrowserRouter>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
+      <BookingProvider>
+        <BrowserRouter>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
+      </BookingProvider>
     </AuthProvider>
   </React.StrictMode>
 );
