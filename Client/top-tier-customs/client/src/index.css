@@ -1,0 +1,16 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@import "tailwindcss/colors"; /* Optional: if you use the colors plugin */
+
+html,
+body {
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark html,
+.dark body {
+  background-color: #18181b; /* zinc-900 */
+  color: white;
+}
