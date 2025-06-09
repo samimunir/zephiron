@@ -23,7 +23,11 @@ const Layout = ({ children }: LayoutProps) => {
       <ScrollProgressBar />
       <Navbar />
       <main className="p-6">{children}</main>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme={isDark ? "dark" : "light"}
+      />
       <Footer />
     </div>
   );

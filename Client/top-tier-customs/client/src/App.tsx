@@ -7,6 +7,8 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import BookingModal from "./components/BookingModal";
 import CartDrawer from "./components/CartDrawer";
+import Protected from "./components/Protected";
+import UserDashboardPage from "./pages/UserDashboardPage";
 
 function App() {
   return (
@@ -17,6 +19,14 @@ function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <Protected>
+              <UserDashboardPage />
+            </Protected>
+          }
+        />
       </Routes>
       <BookingModal />
       <CartDrawer />

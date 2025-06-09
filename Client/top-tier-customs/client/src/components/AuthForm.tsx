@@ -358,18 +358,17 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import axios from "axios";
+
+type Mode = "login" | "register";
 
 interface AuthFormProps {
-  mode: "login" | "register";
+  mode: Mode;
 }
 
 const AuthForm = ({ mode }: AuthFormProps) => {
-  const { login } = useAuth();
   const navigate = useNavigate();
-
-  const isLogin = mode === "login";
-
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -383,6 +382,8 @@ const AuthForm = ({ mode }: AuthFormProps) => {
     adminCode: "",
   });
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -390,51 +391,59 @@ const AuthForm = ({ mode }: AuthFormProps) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
-      toast.error("Email and password are required.");
-      return;
+    setLoading(true);
+
+    try {
+      if (mode === "register") {
+        if (formData.password !== formData.confirmPassword) {
+          toast.error("Passwords do not match.");
+          setLoading(false);
+          return;
+        }
+
+        const payload = {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          city: formData.city,
+          country: formData.country,
+        };
+
+        const res = await axios.post(
+          "http://localhost:3000/api/auth/register",
+          payload
+        );
+        console.log("res:", res);
+        toast.success("Account created. You can now log in.");
+        navigate("/login");
+      }
+
+      if (mode === "login") {
+        const payload = {
+          email: formData.email,
+          password: formData.password,
+        };
+
+        const res = await axios.post(
+          "http://localhost:3000/api/auth/login",
+          payload
+        );
+        const { token, user } = res.data;
+
+        login(token, user);
+        toast.success("Welcome back!");
+        navigate("/dashboard");
+      }
+    } catch (err: any) {
+      toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
-
-    if (!isLogin) {
-      const {
-        firstName,
-        lastName,
-        confirmPassword,
-        phone,
-        city,
-        country,
-        adminCode,
-      } = formData;
-
-      if (
-        !firstName ||
-        !lastName ||
-        !confirmPassword ||
-        !phone ||
-        !city ||
-        !country
-      ) {
-        toast.error("Please fill all registration fields.");
-        return;
-      }
-
-      if (formData.password !== confirmPassword) {
-        toast.error("Passwords do not match.");
-        return;
-      }
-
-      if (isAdmin && !adminCode) {
-        toast.error("Admin Code is required for admin signup.");
-        return;
-      }
-    }
-
-    login();
-    toast.success(`${isLogin ? "Logged in" : "Registered"} successfully!`);
-    navigate("/");
   };
 
   return (
@@ -444,10 +453,10 @@ const AuthForm = ({ mode }: AuthFormProps) => {
         className="bg-white dark:bg-zinc-900 shadow-xl p-8 rounded-lg w-full max-w-xl space-y-6"
       >
         <h2 className="text-3xl font-bold text-center text-zinc-800 dark:text-white">
-          {isLogin ? "Login" : "Register an Account"}
+          {mode === "login" ? "Login" : "Register an Account"}
         </h2>
 
-        {!isLogin && (
+        {mode === "register" && (
           <>
             <div className="flex items-center justify-between">
               <span className="text-zinc-700 dark:text-zinc-300 font-medium">
@@ -585,7 +594,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           </div>
         </div>
 
-        {!isLogin && (
+        {mode === "register" && (
           <div>
             <label className="block text-sm mb-1 text-zinc-700 dark:text-zinc-300">
               Confirm Password
@@ -604,11 +613,11 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           type="submit"
           className="w-full py-2 bg-red-600 hover:bg-red-700 transition text-white rounded font-semibold"
         >
-          {isLogin ? "Login" : "Register"}
+          {mode === "login" ? "Login" : "Register"}
         </button>
 
         <p className="text-sm text-center text-zinc-600 dark:text-zinc-400">
-          {isLogin ? (
+          {mode === "login" ? (
             <>
               Don’t have an account?{" "}
               <Link

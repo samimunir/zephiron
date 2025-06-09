@@ -301,7 +301,7 @@ const Navbar = () => {
 
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const { isAuthenticated, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -373,7 +373,7 @@ const Navbar = () => {
               Testimonials
             </Link>
           </li>
-          {isAuthenticated && (
+          {user && (
             <li>
               <Link
                 to="/dashboard"
@@ -417,9 +417,9 @@ const Navbar = () => {
           </button>
 
           {/* Auth Button */}
-          {isAuthenticated ? (
+          {user ? (
             <button
-              onClick={() => logout}
+              onClick={() => logout()}
               className="border-2 border-rose-500 px-2 py-1 rounded-md hover:bg-rose-500 transition-all"
             >
               Logout
@@ -476,7 +476,7 @@ const Navbar = () => {
                 Testimonials
               </Link>
             </li>
-            {isAuthenticated && (
+            {user && (
               <li>
                 <Link to="/dashboard" onClick={() => setMenuOpen(false)}>
                   Dashboard
