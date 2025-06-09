@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Menu, X, Home, Package, Wrench, LayoutDashboard } from "lucide-react";
 import ThemeToggle from "./ui/ThemeToggle";
 import { useTheme } from "../context/ThemeContext";
-import logo from "../assets/TT_CUSTOMS_LOGO.jpg";
+import logo from "../assets/logo.jpg";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Fake auth status (replace with real logic later)
+// Replace this with your actual auth logic
 const isAuthenticated = false;
 
 const navLinks = [
@@ -33,13 +33,15 @@ const Navbar = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const bgColor = isDark ? "bg-zinc-900" : "bg-white";
-  const textColor = isDark ? "text-white" : "text-black";
+  const bgColor = isDark ? "bg-zinc-900 text-white" : "bg-white text-black";
   const hoverColor = isDark ? "hover:text-blue-400" : "hover:text-red-600";
 
   return (
-    <header
-      className={`shadow-md transition-colors duration-300 ${bgColor} ${textColor}`}
+    <motion.header
+      className={`shadow-md transition-colors duration-300 ${bgColor}`}
+      initial={{ opacity: 0, y: -24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {/* Top bar container */}
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
@@ -55,7 +57,7 @@ const Navbar = () => {
           </span>
         </div>
 
-        {/* Center: Nav Links */}
+        {/* Center: Nav Links (Desktop) */}
         <nav className="hidden md:flex flex-1 justify-center space-x-6 items-center">
           {navLinks.map((link) => {
             if (link.authOnly && !isAuthenticated) return null;
@@ -77,7 +79,7 @@ const Navbar = () => {
           <ThemeToggle />
         </div>
 
-        {/* Mobile Menu Toggle Button */}
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden ml-2"
@@ -86,14 +88,14 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ height: 0 }}
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
-            className={`md:hidden overflow-hidden px-4 pb-4 border-t ${bgColor} ${textColor}`}
+            className={`md:hidden overflow-hidden px-4 pb-4 border-t ${bgColor}`}
           >
             {navLinks.map((link) => {
               if (link.authOnly && !isAuthenticated) return null;
@@ -114,7 +116,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
 
