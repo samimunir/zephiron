@@ -1,8 +1,10 @@
 import { type ReactNode } from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "../context/ThemeContext";
+import ScrollProgressBar from "./ui/ScrollProgressBar";
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,9 +20,11 @@ const Layout = ({ children }: LayoutProps) => {
         isDark ? "bg-zinc-900 text-white" : "bg-white text-black"
       }`}
     >
+      <ScrollProgressBar />
       <Navbar />
       <main className="p-6">{children}</main>
       <ToastContainer position="top-right" autoClose={3000} />
+      <Footer />
     </div>
   );
 };

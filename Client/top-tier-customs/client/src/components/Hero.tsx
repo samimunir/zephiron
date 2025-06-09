@@ -11,7 +11,7 @@ const Hero = () => {
 
   return (
     <section
-      className={`flex-grow relative grid grid-cols-1 md:grid-cols-2 w-full ${bgColor}`}
+      className={`relative w-full h-[calc(100vh-72px)] grid grid-cols-1 md:grid-cols-2 ${bgColor}`}
     >
       {/* Left Background Image */}
       <div className="relative h-full">
