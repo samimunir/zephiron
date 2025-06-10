@@ -131,3 +131,26 @@ export const login = async (req, res) => {
       .json({ message: "Login failed.", error: err.message });
   }
 };
+
+export const userData = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.staus(400).json({
+        success: false,
+        message: "Failed to fetch user data.",
+        error: "Invalid/unknown user ID",
+      });
+    }
+
+    return res
+      .status(200)
+      .json({ success: true, message: "User found.", user: user });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch user data.",
+      error: err.message,
+    });
+  }
+};

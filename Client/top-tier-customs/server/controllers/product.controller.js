@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import Product from "../models/product.model.js";
+import axios from "axios";
 
 export const createProduct = async (req, res) => {
   try {
@@ -24,8 +25,11 @@ export const createProduct = async (req, res) => {
       });
     }
 
-    // TODO: implement logic to fetch user data from ID and verify if user is admin.
-    // if (user.role !== "admin") {
+    // const res = axios.get(`http://localhost:3000/api/auth/${adminId}`);
+
+    // const userData = res.data.user;
+
+    // if (userData.role === "customer") {
     //   return res.status(400).json({
     //     success: false,
     //     message: "Product creation failed.",

@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectDB } from "./database/mongodb.js";
 import authRouter from "./routes/auth.route.js";
 import productRouter from "./routes/product.route.js";
+import serviceRouter from "./routes/service.route.js";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
+app.use("/api/services", serviceRouter);
 
 app.listen(PORT, () => {
   console.log(`top-tier-customs SERVER is live on http://localhost:${PORT}`);
