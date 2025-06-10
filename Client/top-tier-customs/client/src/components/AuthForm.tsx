@@ -446,6 +446,10 @@ const AuthForm = ({ mode }: AuthFormProps) => {
     }
   };
 
+  if (loading) {
+    return <div className="text-5xl text-red-500 font-bold">LOADING...</div>;
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <form

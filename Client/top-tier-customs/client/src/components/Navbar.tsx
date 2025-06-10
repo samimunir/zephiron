@@ -285,7 +285,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Sun, Moon, ShoppingCart } from "lucide-react";
+import { Menu, X, Sun, Moon, ShoppingCart, User, LogOut } from "lucide-react";
 import logo from "../assets/logo.jpg";
 import { useTheme } from "../context/ThemeContext";
 import { useCart } from "../context/CartContext";
@@ -420,16 +420,16 @@ const Navbar = () => {
           {user ? (
             <button
               onClick={() => logout()}
-              className="border-2 border-rose-500 px-2 py-1 rounded-md hover:bg-rose-500 transition-all"
+              className="p-2 border border-rose-500 rounded-full hover:bg-rose-500 transition-all"
             >
-              Logout
+              <LogOut className="w-4 h-4 text-rose-500 hover:text-zinc-100 transition-all" />
             </button>
           ) : (
             <button
               onClick={() => navigate("/login")}
-              className="border-2 border-rose-500 px-2 py-1 rounded-md hover:bg-rose-500 transition-all"
+              className="p-2 rounded-full border border-gray-400 hover:border-sky-500 transition"
             >
-              Login
+              <User className="w-4 h-4 text-sky-500" />
             </button>
           )}
 
