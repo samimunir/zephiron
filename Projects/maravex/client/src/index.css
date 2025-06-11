@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 * {
-  margin: 0;
-  padding: 0;
   font-family: "Inter", sans-serif;
+  transition: all linear 0.3s;
+  scrollbar-width: none;
 }
