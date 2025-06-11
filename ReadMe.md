@@ -34,6 +34,13 @@ Sami Munir | samidmunir@outlook.com | Rutgers University B.S. Computer Science |
 - Python
 - pip
 
+### maravex _(MERN stack)_
+
+- MongoDB
+- Express
+- React
+- Node
+
 ## Client
 
 ### top-tier-customs _(MERN stack)_
