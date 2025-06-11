@@ -1,13 +1,14 @@
+import Layout from "./layout/Layout";
 import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <main className="w-full h-[100vh] flex justify-center items-center">
-      <h1 className="text-5xl font-bold text-zinc-950 uppercase">maravex</h1>
+    <Layout>
       <Routes>
-        <Route path="/" element={<p>INDEX PAGE</p>} />
+        <Route path="/" element={<h1>MARAVEX - HOME</h1>} />
+        <Route path="/catalog" element={<h1>MARAVEX - CATALOG</h1>} />
       </Routes>
-    </main>
+    </Layout>
   );
 };
 
