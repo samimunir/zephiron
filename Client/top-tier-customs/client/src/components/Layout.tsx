@@ -22,7 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
     >
       <ScrollProgressBar />
       <Navbar />
-      <main className="p-6">{children}</main>
+      <main className="">{children}</main>
       <ToastContainer
         position="top-right"
         autoClose={3000}

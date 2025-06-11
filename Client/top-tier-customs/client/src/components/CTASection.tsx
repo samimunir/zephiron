@@ -5,9 +5,10 @@ const CTASection = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const bg = isDark
-    ? "bg-gradient-to-r from-zinc-900 to-zinc-800"
-    : "bg-gradient-to-r from-gray-100 to-gray-50";
+  // const bg = isDark
+  //   ? "bg-gradient-to-r from-zinc-900 to-zinc-800"
+  //   : "bg-gradient-to-r from-gray-100 to-gray-50";
+  const bg = isDark ? "bg-zinc-950" : "bg-gray-50";
   const text = isDark ? "text-white" : "text-gray-900";
 
   return (

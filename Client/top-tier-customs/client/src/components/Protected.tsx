@@ -6,7 +6,7 @@ const Protected = ({ children }: { children: React.ReactElement }) => {
 
   if (loading) {
     return (
-      <div className="w-full h-full flex items-center justify-center text-5xl text-amber-500 font-bold">
+      <div className="w-full h-full flex items-center justify-center text-5xl text-rose-500 font-bold">
         LOADING...
       </div>
     );

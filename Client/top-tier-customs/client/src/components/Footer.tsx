@@ -6,7 +6,7 @@ const Footer = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const bg = isDark ? "bg-zinc-950" : "bg-gray-100";
+  const bg = isDark ? "bg-zinc-900" : "bg-gray-100";
   const text = isDark ? "text-gray-300" : "text-gray-700";
   const heading = isDark ? "text-white" : "text-black";
 

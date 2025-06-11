@@ -50,7 +50,7 @@ const ServiceCard = ({ service }: Props) => {
   const { openModal } = useBooking();
 
   return (
-    <div className="bg-white dark:bg-zinc-900 shadow-md rounded-lg overflow-hidden transition hover:scale-[1.02] duration-300">
+    <div className="bg-white dark:bg-zinc-950 shadow-md rounded-lg overflow-hidden transition hover:scale-[1.02] duration-300">
       <img
         src={service.image}
         alt={service.title}

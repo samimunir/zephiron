@@ -25,7 +25,7 @@ const TestimonialsSection = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const sectionBg = isDark ? "bg-zinc-950" : "bg-gray-50";
+  const sectionBg = isDark ? "bg-zinc-900" : "bg-gray-50";
   const cardBg = isDark ? "bg-zinc-800" : "bg-white";
   const textColor = isDark ? "text-white" : "text-black";
   const subColor = isDark ? "text-gray-300" : "text-gray-600";

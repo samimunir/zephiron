@@ -8,10 +8,10 @@ const Hero = () => {
 
   const bgColor = isDark ? "bg-zinc-900 text-white" : "bg-white text-black";
   const overlayColor = isDark ? "bg-black/50" : "bg-white/60";
-
+  // h-[calc(100vh-72px)]
   return (
     <section
-      className={`relative w-full h-[calc(100vh-72px)] grid grid-cols-1 md:grid-cols-2 ${bgColor}`}
+      className={`relative w-full h-[100vh] grid grid-cols-1 md:grid-cols-2 ${bgColor}`}
     >
       {/* Left Background Image */}
       <div className="relative h-full">

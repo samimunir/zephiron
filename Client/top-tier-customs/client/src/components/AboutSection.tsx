@@ -5,7 +5,7 @@ const AboutSection = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const bgColor = isDark ? "bg-zinc-900" : "bg-white";
+  const bgColor = isDark ? "bg-zinc-950" : "bg-white";
   const textColor = isDark ? "text-white" : "text-black";
   const subTextColor = isDark ? "text-gray-300" : "text-gray-600";
 
