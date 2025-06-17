@@ -12,6 +12,7 @@ import { useTheme } from "../context/Theme";
 import Logout from "./ui/Logout";
 import Cart from "./ui/Cart";
 import { useLocation, useNavigate } from "react-router-dom";
+import Profile from "./ui/Profile";
 
 const navItems = [
   {
@@ -51,7 +52,7 @@ const navItems = [
 const Navbar = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -105,6 +106,7 @@ const Navbar = () => {
               <Logout type="icon" />
             </div>
           )}
+          {!isAuthenticated && <Profile type="icon" />}
         </div>
       </nav>
     </main>
