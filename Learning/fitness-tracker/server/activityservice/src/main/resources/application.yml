@@ -5,6 +5,11 @@ spring:
     mongodb:
       uri: mongodb+srv://samidmunir:QcOoejfyhScXyuPV@fitness-tracker-activit.barwpke.mongodb.net/?retryWrites=true&w=majority&appName=fitness-tracker-activity
       database: fitness-tracker-activity
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 server:
   port: 8082
 
@@ -12,3 +17,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+rabbitmq:
+  exchange:
+    name: fitness.exchange
+  queue:
+    name: activity.queue
+  routing:
+    key: activity.tracking
